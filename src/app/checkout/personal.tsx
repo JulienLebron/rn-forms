@@ -3,6 +3,7 @@ import CustomButton from "../../components/CustomButton";
 import { router } from "expo-router";
 import CustomTextInput from "../../components/CustomTextInput";
 import { useState } from "react";
+import KeyboardAwareScrollView from "../../components/KeyboardAwareScrollView";
 
 export default function PersonalDetailsForm() {
   const [fullname, setFullname] = useState("");
@@ -15,7 +16,7 @@ export default function PersonalDetailsForm() {
   };
 
   return (
-    <View style={styles.container}>
+    <KeyboardAwareScrollView>
       <CustomTextInput label="Full name" placeholder="Joe do" />
       <CustomTextInput label="Address" placeholder="Address" />
 
@@ -38,19 +39,18 @@ export default function PersonalDetailsForm() {
         inputMode="tel"
       />
       <CustomButton title="Next" onPress={onNext} style={styles.button} />
-    </View>
+    </KeyboardAwareScrollView>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
     backgroundColor: "white",
-    flex: 1,
+    flexGrow: 1,
     padding: 10,
     gap: 5,
   },
   button: {
     marginTop: "auto",
-    marginBottom: 25,
   },
 });
