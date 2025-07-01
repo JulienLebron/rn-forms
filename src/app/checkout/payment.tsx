@@ -1,4 +1,4 @@
-import { Text, View, StyleSheet } from "react-native";
+import { View, StyleSheet } from "react-native";
 import CustomButton from "../../components/CustomButton";
 import { router } from "expo-router";
 import KeyboardAwareScrollView from "../../components/KeyboardAwareScrollView";
@@ -6,27 +6,23 @@ import { FormProvider, SubmitHandler, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import CustomTextInput from "../../components/CustomTextInput";
 import * as z from "zod";
-
-const PaymentInfoSchema = z.object({
-  cardnumber: z
-    .string()
-    .length(16, { message: "Card number must be 16 digits" }),
-  expiredate: z
-    .string()
-    .regex(/^(0[1-9]|1[0-2])\/?([0-9]{2})$/, "Please use the MM/YY format"),
-  cvv: z.coerce.number().min(100).max(999),
-});
-
-type PaymentInfo = z.infer<typeof PaymentInfoSchema>;
+import {
+  PaymentInfo,
+  PaymentInfoSchema,
+  useCheckoutForm,
+} from "../../contexts/CheckoutFormProvider";
 
 export default function PaymentDetailsForm() {
+  const { setPaymentInfo, paymentInfo } = useCheckoutForm();
+
   const form = useForm<PaymentInfo>({
     resolver: zodResolver(PaymentInfoSchema),
+    defaultValues: paymentInfo,
   });
 
   const onNext: SubmitHandler<PaymentInfo> = (data) => {
     // validate form
-    console.log(data);
+    setPaymentInfo(data);
     // redirect next
     router.push("/checkout/confirm");
   };
@@ -35,13 +31,13 @@ export default function PaymentDetailsForm() {
     <KeyboardAwareScrollView>
       <FormProvider {...form}>
         <CustomTextInput
-          name="cardnumber"
+          name="cardNumber"
           label="Card number"
           placeholder="1234 5678 9012 3456"
         />
         <View style={{ flexDirection: "row", gap: 5 }}>
           <CustomTextInput
-            name="expiredate"
+            name="expireDate"
             label="Expires"
             placeholder="01/30"
             containerStyle={{ flex: 1 }}

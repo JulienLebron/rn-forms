@@ -2,31 +2,10 @@ import { Text, StyleSheet, View } from "react-native";
 import { Link, router } from "expo-router";
 import CustomButton from "../../components/CustomButton";
 import KeyboardAwareScrollView from "../../components/KeyboardAwareScrollView";
-
-const personalInfo = {
-  fullName: "Vadim Savin",
-  address: "Poblenou",
-  city: "Barcelona",
-  postcode: "1234",
-  phone: "60123123123",
-  country: "ES",
-};
-
-const paymentInfo = {
-  cardNumber: "1234123412341234",
-  expires: "01/30",
-  cvv: "123",
-};
+import { useCheckoutForm } from "../../contexts/CheckoutFormProvider";
 
 export default function ConfirmForm() {
-  const onNext = () => {
-    // validate form
-
-    // submit the data
-    // redirect next
-    router.dismissAll();
-    router.back();
-  };
+  const { personalInfo, paymentInfo, onSubmit } = useCheckoutForm();
 
   return (
     <KeyboardAwareScrollView>
@@ -69,7 +48,7 @@ export default function ConfirmForm() {
           </View>
         )}
 
-        <CustomButton title="Submit" onPress={onNext} style={styles.button} />
+        <CustomButton title="Submit" onPress={onSubmit} style={styles.button} />
       </View>
     </KeyboardAwareScrollView>
   );
