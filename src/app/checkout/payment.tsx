@@ -52,7 +52,7 @@ export default function PaymentDetailsForm() {
           />
         </View>
         <CustomCheckbox name="saveCard" label="Save credit card" />
-        Add commentMore actions
+
         <CustomSwitch name="switchValue" label="On or off?" />
         <CustomButton
           title="Next"
