@@ -7,24 +7,33 @@ import {
   StyleProp,
   ViewStyle,
 } from "react-native";
+import { useController } from "react-hook-form";
 
 type CustomTextInput = {
   label?: string;
   containerStyle?: StyleProp<ViewStyle>;
+  name: string;
 } & ComponentProps<typeof TextInput>;
 
 export default function CustomTextInput({
   label,
   containerStyle,
+  name,
   ...textInputProps
 }: CustomTextInput) {
-  const error = undefined;
+  const {
+    field: { value, onBlur, onChange },
+    fieldState: { error },
+  } = useController({ name });
 
   return (
     <View style={containerStyle}>
       {label && <Text style={styles.label}>{label}</Text>}
       <TextInput
         {...textInputProps}
+        value={value}
+        onBlur={onBlur}
+        onChangeText={onChange}
         style={[
           styles.input,
           textInputProps.style,
