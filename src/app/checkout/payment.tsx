@@ -11,6 +11,8 @@ import {
   PaymentInfoSchema,
   useCheckoutForm,
 } from "../../contexts/CheckoutFormProvider";
+import CustomCheckbox from "../../components/CustomCheckbox";
+import CustomSwitch from "../../components/CustomSwitch";
 
 export default function PaymentDetailsForm() {
   const { setPaymentInfo, paymentInfo } = useCheckoutForm();
@@ -49,7 +51,9 @@ export default function PaymentDetailsForm() {
             containerStyle={{ flex: 1 }}
           />
         </View>
-
+        <CustomCheckbox name="saveCard" label="Save credit card" />
+        Add commentMore actions
+        <CustomSwitch name="switchValue" label="On or off?" />
         <CustomButton
           title="Next"
           onPress={form.handleSubmit(onNext)}
